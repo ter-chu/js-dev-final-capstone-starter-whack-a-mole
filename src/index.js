@@ -1,15 +1,21 @@
 const holes = document.querySelectorAll('.hole');
 const moles = document.querySelectorAll('.mole');
+// const unicorns = document.querySelectorAll('.uni');
+// const beagles = document.querySelectorAll('.dog');
+// const gyms = document.querySelectorAll('.gym');
 const startButton = document.querySelector('#start');
-// TODO: Add the missing query selectors:
-const score; // Use querySelector() to get the score element
-const timerDisplay; // use querySelector() to get the timer element.
+const score = document.querySelector('#score');
+const timerDisplay = document.querySelector('#timer'); 
+const slider = document.querySelector('#difficulty');
 
 let time = 0;
 let timer;
 let lastHole = 0;
 let points = 0;
 let difficulty = "hard";
+let gymnast = 0;
+let dog = 0;
+let uni = 0;
 
 /**
  * Generates a random integer within a range.
@@ -21,7 +27,7 @@ let difficulty = "hard";
  *
  */
 function randomInteger(min, max) {
-  // return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 /**
@@ -41,9 +47,18 @@ function randomInteger(min, max) {
  */
 function setDelay(difficulty) {
   // TODO: Write your code here.
-  
+  if (difficulty === "easy") return 1500;
+  if (difficulty === "normal") return 1000;
+  if (difficulty === "hard") {
+    return randomInteger (600, 1200);
+  }
 }
 
+// function getDifficulty() {
+
+//   // difficutly = slider.
+//   return difficultyOverride; //string
+// }
 /**
  * Chooses a random hole from a list of holes.
  *
@@ -60,7 +75,13 @@ function setDelay(difficulty) {
  */
 function chooseHole(holes) {
   // TODO: Write your code here.
-
+  const index = randomInteger(0, 8); 
+  const hole = holes[index];
+  if (hole === lastHole) {
+    return chooseHole(holes);
+  }
+  lastHole = hole;
+  return hole;
 }
 
 /**
@@ -85,7 +106,7 @@ function chooseHole(holes) {
 */
 function gameOver() {
   // TODO: Write your code here
-  
+  return (time > 0) ? showUp() : stopGame();
 }
 
 /**
@@ -98,8 +119,10 @@ function gameOver() {
 *
 */
 function showUp() {
-  let delay = 0; // TODO: Update so that it uses setDelay()
-  const hole = 0;  // TODO: Update so that it use chooseHole()
+  let delay = setDelay(difficulty); // TODO: TERENCE - should it default to "hard"??
+  const hole = chooseHole(holes);  // TODO: Update so that it use chooseHole()
+  
+
   return showAndHide(hole, delay);
 }
 
@@ -113,12 +136,13 @@ function showUp() {
 */
 function showAndHide(hole, delay){
   // TODO: call the toggleVisibility function so that it adds the 'show' class.
-  
+  if (!hole.classList.contains("show")) toggleVisibility(hole);
+
   const timeoutID = setTimeout(() => {
     // TODO: call the toggleVisibility function so that it removes the 'show' class when the timer times out.
-    
+    toggleVisibility(hole);
     gameOver();
-  }, 0); // TODO: change the setTimeout delay to the one provided as a parameter
+  }, delay); // TODO: change the setTimeout delay to the one provided as a parameter
   return timeoutID;
 }
 
@@ -130,10 +154,13 @@ function showAndHide(hole, delay){
 */
 function toggleVisibility(hole){
   // TODO: add hole.classList.toggle so that it adds or removes the 'show' class.
-  
+   hole.classList.toggle("show");
   return hole;
 }
 
+// function toggleClickability(element) {
+//   element.dis
+// }
 /**
 *
 * This function increments the points global variable and updates the scoreboard.
@@ -146,7 +173,8 @@ function toggleVisibility(hole){
 */
 function updateScore() {
   // TODO: Write your code here
-
+  points++;
+  score.textContent = points;
   return points;
 }
 
@@ -159,8 +187,8 @@ function updateScore() {
 */
 function clearScore() {
   // TODO: Write your code here
-  // points = 0;
-  // score.textContent = points;
+  points = 0;
+  score.textContent = points;
   return points;
 }
 
@@ -172,7 +200,10 @@ function clearScore() {
 function updateTimer() {
   // TODO: Write your code here.
   // hint: this code is provided to you in the instructions.
-  
+  if (time > 0){
+    time -= 1;
+    timerDisplay.textContent = time;
+  }
   return time;
 }
 
@@ -184,7 +215,7 @@ function updateTimer() {
 */
 function startTimer() {
   // TODO: Write your code here
-  // timer = setInterval(updateTimer, 1000);
+  timer = setInterval(updateTimer, 1000);
   return timer;
 }
 
@@ -196,9 +227,10 @@ function startTimer() {
 * the moles.
 *
 */
-function whack(event) {
+function whack() {
   // TODO: Write your code here.
   // call updateScore()
+  let points = updateScore();
   return points;
 }
 
@@ -209,7 +241,15 @@ function whack(event) {
 */
 function setEventListeners(){
   // TODO: Write your code here
+  // type: event type to listen for: click on mole
+  // listener: whack event handler
+  disableStartButton();
+  moles.forEach (mole => mole.addEventListener('click', whack));
+  // unicorns.forEach (unicorn => unicorn.addEventListener('click', whack));
+  // beagles.forEach (dog => dog.addEventListener('click', whack));
+  // gyms.forEach (gymnast => gymnast.addEventListener('click', whack));
 
+  // return moles, unicorns, beagles, gyms;
   return moles;
 }
 
@@ -221,6 +261,7 @@ function setEventListeners(){
 */
 function setDuration(duration) {
   time = duration;
+  timerDisplay.textContent = time;
   return time;
 }
 
@@ -233,8 +274,19 @@ function setDuration(duration) {
 function stopGame(){
   // stopAudio(song);  //optional
   clearInterval(timer);
+  enableStartButton();
   return "game stopped";
 }
+
+function disableStartButton() {
+  startButton.disabled=true;
+  
+}
+
+function enableStartButton() {
+  startButton.disabled=false;
+}
+
 
 /**
 *
@@ -243,12 +295,16 @@ function stopGame(){
 *
 */
 function startGame(){
-  //setDuration(10);
-  //showUp();
+  time = setDuration(10);
+  setEventListeners();
+  clearScore();
+  startTimer();
+  showUp(); 
   return "game started";
 }
 
 startButton.addEventListener("click", startGame);
+// slider.addEventListener("input", getDifficulty);
 
 
 // Please do not modify the code below.

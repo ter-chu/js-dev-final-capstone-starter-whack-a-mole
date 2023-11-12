@@ -1,6 +1,6 @@
 html {
-  /*background: url('./assets/background.png') no-repeat center center fixed;*/
-  background: url('https://github.com/Thinkful-Ed/js-dev-final-capstone-starter/blob/main/assets/background.png?raw=true') no-repeat center center fixed;
+  background: url('../assets/rohit-tandon-9wg5jCEPBsw-unsplash.jpg') no-repeat center center fixed;
+  /* background: url('https://github.com/Thinkful-Ed/js-dev-final-capstone-starter/blob/main/assets/background.png?raw=true') no-repeat center center fixed; */
   box-sizing: border-box;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -14,25 +14,29 @@ h1 {
   text-align: center;
   font-size: 90px;
   font-family: "Comic Sans MS", "Comic Sans", cursive;
-  color: white;
+  color: #CFB784;
   -webkit-text-stroke: 2px black;
 }
 
 h2 {
   text-align: center;
   font-size: 40px;
-  color: white;
+  color: #6C5F5B;
   -webkit-text-stroke: 1px black;
 }
 
 #start {
     text-align: center;
     font-size: 30px;
+    width: 100%;
+    border-radius: 4px;
+    background-color:#04AA6D ;
 }
 
 #timer{
-    color: white;
+    color: #6C5F5B;
 }
+
 
 .grid {
   width: 600px;
@@ -40,7 +44,7 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
-  /*cursor: url('./assets/mallet.png'), pointer;*/
+  cursor: url('../assets/mallet.png'), wait ;
 }
 
 .hole {
@@ -51,8 +55,8 @@ h2 {
 
 .hole:after {
   display: block;
-  /*background: url("./assets/hole.png") bottom center no-repeat;*/
-  background: url("https://github.com/Thinkful-Ed/js-dev-final-capstone-starter/blob/main/assets/hole.png?raw=true") bottom center no-repeat;
+  /* background: url("../assets/PN_cartoon-cloud-with-a-cute-face.png") bottom center no-repeat; */
+  /* background: url("https://github.com/Thinkful-Ed/js-dev-final-capstone-starter/blob/main/assets/hole.png?raw=true") bottom center no-repeat; */
   background-size:contain;
   content:'';
   width: 100%;
@@ -63,9 +67,43 @@ h2 {
   pointer-events:none;
 }
 
-.mole {
-  /*background:url('./assets/mole.png') bottom center no-repeat;*/
-  background:url('https://github.com/Thinkful-Ed/js-dev-final-capstone-starter/blob/main/assets/mole.png?raw=true') bottom center no-repeat;
+.icon {
+  background-size: 10%;
+  position: absolute;
+  top: 10%;
+  width: 10%;
+  height: 10%;
+  /*transition: transform 0.5s;*/
+  transition: all 1s;
+  pointer-events:auto;
+}
+
+.uni {
+  background:url('../assets/unicorn.png') bottom center no-repeat;
+  background-size: 50%;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  height: 100%;
+  /*transition: transform 0.5s;*/
+  transition: all 1s;
+  pointer-events:auto;
+}
+
+.dog {
+  background:url('../assets/beagle.png') bottom center no-repeat;
+  background-size: 40%;
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  height: 100%;
+  /*transition: transform 0.5s;*/
+  transition: all 1s;
+  pointer-events:auto;
+}
+
+.gym {
+  background:url('../assets/gymnast.png') bottom center no-repeat;
   background-size: 40%;
   position: absolute;
   top: 100%;
@@ -79,4 +117,39 @@ h2 {
 .hole.show .mole {
   top: 0;
   /*transform: scale(1.1);*/
+}
+
+.infoPane {
+  background-color: lightgray;
+  opacity: .8;
+}
+.flex-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: space-evenly;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+
+  /* border: 1px solid; */
+  background-color: white;
+}
+
+#cancel {
+  justify-content: center;
+}
+#button {
+  width: 100%;
+  border-radius: 4px;
+}
+#cancelButtonRed {
+  background-color:red;
+}
+
+.disableCancel {
+  background-color:gray;
 }
